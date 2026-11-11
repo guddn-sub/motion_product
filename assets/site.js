@@ -16,11 +16,11 @@
     navigator.serviceWorker.register(new URL("../sw.js", me.src).href).catch(function () {});
   }
 
-  (function load(i) {
-    if (i >= files.length) return;
+  // 세 파일을 한꺼번에 내려받고(빠름), 실행은 적은 순서대로 한다. (async=false)
+  files.forEach(function (name) {
     var s = document.createElement("script");
-    s.src = base + files[i] + "?v=" + seed;
-    s.onload = s.onerror = function () { load(i + 1); };
+    s.src = base + name + "?v=" + seed;
+    s.async = false;
     document.head.appendChild(s);
-  })(0);
+  });
 })();

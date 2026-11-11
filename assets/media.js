@@ -104,10 +104,25 @@
       if (images[key]) fillImage(slot, key, images[key]);
       else note(slot, "이미지 주소가 없어요: " + key);
     });
+    // 영상은 화면 가까이 왔을 때만 만든다. (한꺼번에 불러오면 느려지므로)
+    // 자리는 미리 16:9 로 잡아 두어서, 나중에 채워도 화면이 출렁이지 않는다.
+    var lazy = "IntersectionObserver" in window
+      ? new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) {
+            if (!en.isIntersecting) return;
+            lazy.unobserve(en.target);
+            var key = en.target.getAttribute("data-video");
+            fillVideo(en.target, key, videos[key]);
+          });
+        }, { rootMargin: "600px 0px" })
+      : null;
+
     Array.prototype.forEach.call(document.querySelectorAll("[data-video]"), function (slot) {
       var key = slot.getAttribute("data-video");
-      if (videos[key]) fillVideo(slot, key, videos[key]);
-      else note(slot, "영상 주소가 없어요: " + key);
+      if (!videos[key]) return note(slot, "영상 주소가 없어요: " + key);
+      slot.style.cssText = "max-width:720px;aspect-ratio:16/9";
+      if (lazy) lazy.observe(slot);
+      else fillVideo(slot, key, videos[key]);
     });
   }
 
