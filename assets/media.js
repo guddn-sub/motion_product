@@ -1,0 +1,116 @@
+// 모든 페이지가 공유하는 이미지·영상 삽입 함수.
+// 페이지 HTML 에는 주소가 없고, 빈 자리 표시만 있다:
+//     <figure class="image" data-img="net/12"></figure>      -> url_data.js 의 images["net/12"]
+//     <figure data-video="net/12"></figure>                  -> url_data.js 의 videos["net/12"]
+// 주소는 전부 url_data.js 에서 읽는다. 이미지·영상을 바꾸려면 url_data.js 만 고치면 된다.
+(function () {
+  "use strict";
+
+  var script = document.currentScript;
+  if (!script) return;
+  var root = new URL("../", script.src); // 사이트 루트 (assets 의 한 단계 위)
+
+  function resolve(src) {
+    return /^https?:\/\//i.test(src) ? src : new URL(src, root).href;
+  }
+
+  // 드라이브 주소 -> 재생창(preview) 주소
+  function drivePreview(url) {
+    var m = (url || "").match(/\/file\/d\/([\w-]+)/);
+    return m ? "https://drive.google.com/file/d/" + m[1] + "/preview" : null;
+  }
+
+  function note(slot, text) {
+    var p = document.createElement("p");
+    p.textContent = text;
+    p.style.cssText = "margin:0;padding:12px;background:#f6f4f2;border-radius:8px;color:#555;font-size:14px";
+    slot.appendChild(p);
+    return p;
+  }
+
+  // 이미지 한 장을 자리(slot)에 채운다.
+  function fillImage(slot, key, entry) {
+    var src = typeof entry === "string" ? entry : entry.src;
+    var width = typeof entry === "string" ? null : entry.width;
+    var a = document.createElement("a");
+    a.href = resolve(src);
+    a.target = "_blank";
+    a.rel = "noopener";
+    var img = new Image();
+    img.src = resolve(src);
+    img.alt = key;
+    img.loading = "lazy";
+    img.style.cssText = "max-width:100%;height:auto" + (width ? ";width:" + width + "px" : "");
+    img.addEventListener("error", function () {
+      slot.textContent = "";
+      note(slot, "이미지를 불러오지 못했어요: " + key);
+    });
+    a.appendChild(img);
+    slot.appendChild(a);
+  }
+
+  // 영상 한 개를 자리(slot)에 채운다.
+  //  entry.src 가 있으면 mp4 로 직접 재생, 비어 있으면 drive 주소로 재생창을 만든다.
+  function fillVideo(slot, key, entry) {
+    var player;
+    if (entry.src) {
+      player = document.createElement("video");
+      player.controls = true;
+      player.preload = "metadata";
+      player.setAttribute("playsinline", "");
+      player.src = resolve(entry.src);
+      player.style.cssText =
+        "width:100%;max-width:720px;aspect-ratio:16/9;background:#000;border-radius:8px;display:block";
+      player.addEventListener("error", function () {
+        var msg = document.createElement("p");
+        msg.textContent = "영상을 불러오지 못했어요.";
+        msg.style.cssText = "margin:0;padding:12px;background:#f6f4f2;border-radius:8px;color:#555";
+        slot.replaceChild(msg, player);
+      });
+    } else if (drivePreview(entry.drive)) {
+      player = document.createElement("iframe");
+      player.src = drivePreview(entry.drive);
+      player.allow = "autoplay";
+      player.setAttribute("allowfullscreen", "");
+      player.loading = "lazy";
+      player.style.cssText =
+        "width:100%;max-width:720px;aspect-ratio:16/9;border:0;border-radius:8px;display:block";
+    } else {
+      note(slot, "영상 주소가 없어요: " + key);
+      return;
+    }
+    slot.appendChild(player);
+
+    if (entry.drive) {
+      var cap = document.createElement("p");
+      cap.style.cssText = "font-size:13px;margin:6px 0 0";
+      var link = document.createElement("a");
+      link.href = entry.drive;
+      link.target = "_blank";
+      link.rel = "noopener";
+      link.textContent = "재생이 안 되면 드라이브에서 보기";
+      cap.appendChild(link);
+      slot.appendChild(cap);
+    }
+  }
+
+  function run() {
+    var data = window.URL_DATA || {};
+    var images = data.images || {};
+    var videos = data.videos || {};
+
+    Array.prototype.forEach.call(document.querySelectorAll("[data-img]"), function (slot) {
+      var key = slot.getAttribute("data-img");
+      if (images[key]) fillImage(slot, key, images[key]);
+      else note(slot, "이미지 주소가 없어요: " + key);
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-video]"), function (slot) {
+      var key = slot.getAttribute("data-video");
+      if (videos[key]) fillVideo(slot, key, videos[key]);
+      else note(slot, "영상 주소가 없어요: " + key);
+    });
+  }
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", run);
+  else run();
+})();
