@@ -1,0 +1,327 @@
+[
+ {
+  "kind": "html",
+  "from": "html/모션 작업실 - 환경 설정 415b2437f139806588aafaae49951d82.html",
+  "to": "source/00-setup.html"
+ },
+ {
+  "kind": "image",
+  "from": "images/image.png",
+  "to": "images/setup/setup-1.png"
+ },
+ {
+  "kind": "image",
+  "from": "images/image 1.png",
+  "to": "images/setup/setup-2-1.png"
+ },
+ {
+  "kind": "image",
+  "from": "images/image 2.png",
+  "to": "images/setup/setup-2-2.png"
+ },
+ {
+  "kind": "html",
+  "from": "html/모션 작업실 - 손글씨 프롬프트 415b2437f13980feb425e22712a52c55.html",
+  "to": "source/01-brush.html"
+ },
+ {
+  "kind": "image",
+  "from": "images/image 3.png",
+  "to": "images/brush/01.png"
+ },
+ {
+  "kind": "image",
+  "from": "images/image 4.png",
+  "to": "images/brush/02.png"
+ },
+ {
+  "kind": "image",
+  "from": "images/image 5.png",
+  "to": "images/brush/03.png"
+ },
+ {
+  "kind": "image",
+  "from": "images/image 6.png",
+  "to": "images/brush/04.png"
+ },
+ {
+  "kind": "image",
+  "from": "images/image 7.png",
+  "to": "images/brush/04_02.png"
+ },
+ {
+  "kind": "html",
+  "from": "html/모션 작업실 - 젤리 프롬프트 415b2437f13980d696bfd25b523a1797.html",
+  "to": "source/02-jelly.html"
+ },
+ {
+  "kind": "image",
+  "from": "images/image 8.png",
+  "to": "images/jelly/05.png"
+ },
+ {
+  "kind": "image",
+  "from": "images/image 9.png",
+  "to": "images/jelly/06.png"
+ },
+ {
+  "kind": "image",
+  "from": "images/image 10.png",
+  "to": "images/jelly/07.png"
+ },
+ {
+  "kind": "image",
+  "from": "images/image 11.png",
+  "to": "images/jelly/08.png"
+ },
+ {
+  "kind": "image",
+  "from": "images/image 12.png",
+  "to": "images/jelly/08_02.png"
+ },
+ {
+  "kind": "html",
+  "from": "html/모션 작업실 - 동전 프롬프트 415b2437f13980e8ac69e6cd9173984a.html",
+  "to": "source/03-coin.html"
+ },
+ {
+  "kind": "image",
+  "from": "images/image 13.png",
+  "to": "images/coin/09.png"
+ },
+ {
+  "kind": "image",
+  "from": "images/image 14.png",
+  "to": "images/coin/10.png"
+ },
+ {
+  "kind": "image",
+  "from": "images/image 15.png",
+  "to": "images/coin/11.png"
+ },
+ {
+  "kind": "image",
+  "from": "images/image 16.png",
+  "to": "images/coin/11_02.png"
+ },
+ {
+  "kind": "html",
+  "from": "html/모션 작업실 - 그물 프롬프트 415b2437f1398016b49eccfb8e59499b.html",
+  "to": "source/04-net.html"
+ },
+ {
+  "kind": "image",
+  "from": "images/image 17.png",
+  "to": "images/net/12.png"
+ },
+ {
+  "kind": "image",
+  "from": "images/image 18.png",
+  "to": "images/net/13.png"
+ },
+ {
+  "kind": "image",
+  "from": "images/image 19.png",
+  "to": "images/net/14.png"
+ },
+ {
+  "kind": "image",
+  "from": "images/image 20.png",
+  "to": "images/net/14_02.png"
+ },
+ {
+  "kind": "html",
+  "from": "html/모션 작업실 - 불릿타임 프롬프트 415b2437f1398082b315f0a2c5c04bcf.html",
+  "to": "source/05-bullet-time.html"
+ },
+ {
+  "kind": "image",
+  "from": "images/image 21.png",
+  "to": "images/bullet-time/15.png"
+ },
+ {
+  "kind": "image",
+  "from": "images/image 22.png",
+  "to": "images/bullet-time/16.png"
+ },
+ {
+  "kind": "image",
+  "from": "images/image 23.png",
+  "to": "images/bullet-time/17.png"
+ },
+ {
+  "kind": "image",
+  "from": "images/image 24.png",
+  "to": "images/bullet-time/18.png"
+ },
+ {
+  "kind": "image",
+  "from": "images/스크린샷_2026-11-09_155100.png",
+  "to": "images/bullet-time/18_02.png"
+ },
+ {
+  "kind": "html",
+  "from": "html/모션 작업실 - 마무리 415b2437f139806e8551d22dc6d9b5e9.html",
+  "to": "source/06-finish.html"
+ },
+ {
+  "kind": "image",
+  "from": "images/image 25.png",
+  "to": "images/finish/19.png"
+ },
+ {
+  "kind": "image",
+  "from": "images/image 26.png",
+  "to": "images/finish/20.png"
+ },
+ {
+  "kind": "image",
+  "from": "images/image 27.png",
+  "to": "images/finish/21.png"
+ },
+ {
+  "kind": "image",
+  "from": "images/image 28.png",
+  "to": "images/finish/bonus-1.png"
+ },
+ {
+  "kind": "image",
+  "from": "images/image 29.png",
+  "to": "images/finish/bonus-2.png"
+ },
+ {
+  "kind": "html",
+  "from": "html/모션 작업실 - sonnet 412b2437f13980eca6def2c24e21a838.html",
+  "to": "source/index-notion.html"
+ },
+ {
+  "kind": "video",
+  "from": "videos/1)붓글씨/01) 일단 써 보기.mp4",
+  "to": "videos/brush/01.mp4"
+ },
+ {
+  "kind": "video",
+  "from": "videos/1)붓글씨/02) 진짜 획으로 쓰기.mp4",
+  "to": "videos/brush/02.mp4"
+ },
+ {
+  "kind": "video",
+  "from": "videos/1)붓글씨/03) 먹과 붓.mp4",
+  "to": "videos/brush/03.mp4"
+ },
+ {
+  "kind": "video",
+  "from": "videos/1)붓글씨/04) 카메라와 도장.mp4",
+  "to": "videos/brush/04.mp4"
+ },
+ {
+  "kind": "video",
+  "from": "videos/1)붓글씨/04_02) 슬로건의 폰트 수정.mp4",
+  "to": "videos/brush/04_02.mp4"
+ },
+ {
+  "kind": "video",
+  "from": "videos/2)젤리/05)일단 튀기기.mp4",
+  "to": "videos/jelly/05.mp4"
+ },
+ {
+  "kind": "video",
+  "from": "videos/2)젤리/06)진짜로 출렁이게.mp4",
+  "to": "videos/jelly/06.mp4"
+ },
+ {
+  "kind": "video",
+  "from": "videos/2)젤리/07)말랑함과 밝기.mp4",
+  "to": "videos/jelly/07.mp4"
+ },
+ {
+  "kind": "video",
+  "from": "videos/2)젤리/08)젤리 재질.mp4",
+  "to": "videos/jelly/08.mp4"
+ },
+ {
+  "kind": "video",
+  "from": "videos/2)젤리/08_02) 귤 재질 수정.mp4",
+  "to": "videos/jelly/08_02.mp4"
+ },
+ {
+  "kind": "video",
+  "from": "videos/3)코인/09) 일단 쏟기.mp4",
+  "to": "videos/coin/09.mp4"
+ },
+ {
+  "kind": "video",
+  "from": "videos/3)코인/10)멈출 시각을 먼저 정하기.mp4",
+  "to": "videos/coin/10.mp4"
+ },
+ {
+  "kind": "video",
+  "from": "videos/3)코인/11)3D와 멈춤의 쾌감.mp4",
+  "to": "videos/coin/11.mp4"
+ },
+ {
+  "kind": "video",
+  "from": "videos/3)코인/11_2)동전 가시성 수정.mp4",
+  "to": "videos/coin/11_02.mp4"
+ },
+ {
+  "kind": "video",
+  "from": "videos/4)그물/12)일단 자라기.mp4",
+  "to": "videos/net/12.mp4"
+ },
+ {
+  "kind": "video",
+  "from": "videos/4)그물/13)가지가 글자를 찾아가게.mp4",
+  "to": "videos/net/13.mp4"
+ },
+ {
+  "kind": "video",
+  "from": "videos/4)그물/14)글자로 읽히게.mp4",
+  "to": "videos/net/14.mp4"
+ },
+ {
+  "kind": "video",
+  "from": "videos/4)그물/14-2) 렉 덜걸리게 수정.mp4",
+  "to": "videos/net/14_02.mp4"
+ },
+ {
+  "kind": "video",
+  "from": "videos/5)불릿타임/15) 일단 터뜨리기.mp4",
+  "to": "videos/bullet-time/15.mp4"
+ },
+ {
+  "kind": "video",
+  "from": "videos/5)불릿타임/16) 시간을 둘로 나누기.mp4",
+  "to": "videos/bullet-time/16.mp4"
+ },
+ {
+  "kind": "video",
+  "from": "videos/5)불릿타임/17) 껍질과 물.mp4",
+  "to": "videos/bullet-time/17.mp4"
+ },
+ {
+  "kind": "video",
+  "from": "videos/5)불릿타임/18) 물방울과 엔딩.mp4",
+  "to": "videos/bullet-time/18.mp4"
+ },
+ {
+  "kind": "video",
+  "from": "videos/5)불릿타임/18_2)볼릿타임 애니메이션 수정.mp4",
+  "to": "videos/bullet-time/18_02.mp4"
+ },
+ {
+  "kind": "video",
+  "from": "videos/6)마무리/19)이름표 달기.mp4",
+  "to": "videos/finish/19.mp4"
+ },
+ {
+  "kind": "video",
+  "from": "videos/6)마무리/20) 영상 검사.mp4",
+  "to": "videos/finish/20.mp4"
+ },
+ {
+  "kind": "video",
+  "from": "videos/6)마무리/21) 끊기지 않는 mp4.mp4",
+  "to": "videos/finish/21.mp4"
+ }
+]
