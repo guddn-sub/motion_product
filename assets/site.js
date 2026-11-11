@@ -11,6 +11,11 @@
   // 용량이 큰 이미지·영상에는 붙이지 않는다. 매번 다시 내려받게 되기 때문.
   var seed = Date.now();
 
+  // 서비스 워커 등록: 이후에는 HTML 과 site.js 자체도 열 때마다 최신 여부를 확인한다. (sw.js 참고)
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register(new URL("../sw.js", me.src).href).catch(function () {});
+  }
+
   (function load(i) {
     if (i >= files.length) return;
     var s = document.createElement("script");
