@@ -37,9 +37,11 @@
     a.target = "_blank";
     a.rel = "noopener";
     var img = new Image();
-    img.src = resolve(src);
-    img.alt = key;
+    // loading 을 src 보다 먼저 지정해야, 화면 밖 이미지를 미리 받지 않는다.
     img.loading = "lazy";
+    img.decoding = "async";
+    img.alt = key;
+    img.src = resolve(src);
     img.style.cssText = "max-width:100%;height:auto" + (width ? ";width:" + width + "px" : "");
     img.addEventListener("error", function () {
       slot.textContent = "";
@@ -95,11 +97,14 @@
   }
 
   function run() {
-    var data = window.URL_DATA || {};
+    // 주소 데이터가 아직 없으면 자리를 빈 채로 둔다. (다시 시도해서 데이터가 오면 그때 채워진다)
+    if (!window.URL_DATA) return;
+    var data = window.URL_DATA;
     var images = data.images || {};
     var videos = data.videos || {};
 
     Array.prototype.forEach.call(document.querySelectorAll("[data-img]"), function (slot) {
+      if (slot.firstChild) return; // 이미 채워진 자리는 건너뜀
       var key = slot.getAttribute("data-img");
       if (images[key]) fillImage(slot, key, images[key]);
       else note(slot, "이미지 주소가 없어요: " + key);
@@ -111,6 +116,7 @@
           entries.forEach(function (en) {
             if (!en.isIntersecting) return;
             lazy.unobserve(en.target);
+            if (en.target.firstChild) return;
             var key = en.target.getAttribute("data-video");
             fillVideo(en.target, key, videos[key]);
           });
@@ -118,6 +124,7 @@
       : null;
 
     Array.prototype.forEach.call(document.querySelectorAll("[data-video]"), function (slot) {
+      if (slot.firstChild) return; // 이미 채워진 자리는 건너뜀
       var key = slot.getAttribute("data-video");
       if (!videos[key]) return note(slot, "영상 주소가 없어요: " + key);
       slot.style.cssText = "max-width:720px;aspect-ratio:16/9";
@@ -128,4 +135,5 @@
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", run);
   else run();
+  window.__mlMedia = true; // site.js 가 "이 파일이 실행됐다"를 확인하는 표시
 })();

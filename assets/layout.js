@@ -1,5 +1,5 @@
 // 모든 페이지가 공유하는 공통 레이아웃:
-//   - 맨 위 헤더: 윗줄 [🏠 홈] 버튼 / 아랫줄 경로(홈 › 사이트 제목 › 현재 페이지)
+//   - 맨 위 헤더: 윗줄 [🏠 홈] 버튼 + 오른쪽 끝 버전(예: V0.1.7) / 아랫줄 경로(홈 › 사이트 제목 › 현재 페이지)
 //   - 오른쪽 아래 리모컨: ▲ 맨 위 / ▼ 맨 아래
 // 사이트 제목과 홈 주소는 아래 "설정" 두 줄만 바꾸면 전체에 적용된다.
 (function () {
@@ -9,10 +9,14 @@
   var SITE_TITLE = "모션 작업실 - sonnet";   // 사이트 제목 (경로, 목차 제목에 쓰임)
   var HOME_URL = null;                       // "홈" 링크. null 이면 index.html, 다른 주소를 쓰려면 문자열로 지정
   var HOME_LABEL = "홈";
+  // 버전 (큰 변화 . 중요한 변화 . 사소한 변화). 작업할 때마다 올리고 CHANGELOG.md 에도 적는다.
+  var SITE_VERSION = "0.1.7";
   // ─────────────────────────
 
   var script = document.currentScript;
   if (!script) return;
+  if (window.__mlLayout) return;   // 다시 시도할 때 헤더가 두 번 생기지 않게
+  window.__mlLayout = true;
   var root = new URL("../", script.src);                 // assets/ 의 한 단계 위 = 사이트 루트
   var indexUrl = new URL("index.html", root).href;
   var homeUrl = HOME_URL ? new URL(HOME_URL, root).href : indexUrl;
@@ -34,7 +38,8 @@
     ".ml-bar{position:sticky;top:0;z-index:50;display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:8px 14px;" +
     "background:rgba(255,255,255,.96);border-bottom:1px solid #e5e1dc;" +
     "font:14px/1.4 -apple-system,'Segoe UI','Malgun Gothic',sans-serif}" +
-    ".ml-actions{display:flex;gap:8px}" +
+    ".ml-actions{display:flex;align-items:center;gap:8px;width:100%}" +
+    ".ml-ver{margin-left:auto;color:#8a867d;font-size:12px;letter-spacing:.02em}" +
     ".ml-btn{display:inline-flex;align-items:center;gap:4px;padding:6px 12px;border:1px solid #d9d5ce;border-radius:8px;" +
     "background:#fff;color:#222;font:inherit;text-decoration:none;cursor:pointer;white-space:nowrap}" +
     ".ml-btn:hover{border-color:#e8742a;color:#c45a14}" +
@@ -43,6 +48,9 @@
     ".ml-crumbs a:hover{color:#c45a14;text-decoration:underline}" +
     ".ml-crumbs .cur{color:#111;font-weight:600}" +
     ".ml-sep{color:#b5b0a6}" +
+    // 노션 코드 상자: 안쪽 code 의 글꼴을 pre(노션이 정한 글꼴·크기)를 따르게 한다.
+    // (외부 prism 스타일을 뺀 뒤, 브라우저 기본 고정폭 글꼴로 바뀌어 글자가 작아지는 것을 막는다)
+    "pre.code>code{font-family:inherit}" +
     ".ml-remote{position:fixed;right:16px;bottom:20px;z-index:50;display:flex;flex-direction:column;gap:8px}" +
     ".ml-remote button{width:42px;height:42px;border-radius:50%;border:1px solid #d9d5ce;background:#fff;color:#222;" +
     "box-shadow:0 2px 8px rgba(0,0,0,.15);font-size:16px;line-height:1;cursor:pointer}" +
@@ -85,6 +93,9 @@
   // 윗줄: 홈 버튼 / 아랫줄: 경로
   var actions = el("div", "ml-actions");
   actions.appendChild(home);
+  var ver = el("span", "ml-ver", "V" + SITE_VERSION);   // 같은 줄 오른쪽 끝에 버전 표시
+  ver.title = "버전 " + SITE_VERSION;
+  actions.appendChild(ver);
   bar.appendChild(actions);
   bar.appendChild(crumbs);
   document.body.insertBefore(bar, document.body.firstChild);
