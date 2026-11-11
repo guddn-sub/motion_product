@@ -1,5 +1,5 @@
 // 모든 페이지가 공유하는 공통 레이아웃:
-//   - 맨 위 헤더: [← 뒤로] [🏠 홈]  +  경로(홈 › 사이트 제목 › 현재 페이지)
+//   - 맨 위 헤더: 윗줄 [🏠 홈] 버튼 / 아랫줄 경로(홈 › 사이트 제목 › 현재 페이지)
 //   - 오른쪽 아래 리모컨: ▲ 맨 위 / ▼ 맨 아래
 // 사이트 제목과 홈 주소는 아래 "설정" 두 줄만 바꾸면 전체에 적용된다.
 (function () {
@@ -31,9 +31,10 @@
 
   // ───────── 스타일 (이 파일 하나에 포함) ─────────
   var css =
-    ".ml-bar{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:10px;padding:8px 14px;" +
+    ".ml-bar{position:sticky;top:0;z-index:50;display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:8px 14px;" +
     "background:rgba(255,255,255,.96);border-bottom:1px solid #e5e1dc;" +
     "font:14px/1.4 -apple-system,'Segoe UI','Malgun Gothic',sans-serif}" +
+    ".ml-actions{display:flex;gap:8px}" +
     ".ml-btn{display:inline-flex;align-items:center;gap:4px;padding:6px 12px;border:1px solid #d9d5ce;border-radius:8px;" +
     "background:#fff;color:#222;font:inherit;text-decoration:none;cursor:pointer;white-space:nowrap}" +
     ".ml-btn:hover{border-color:#e8742a;color:#c45a14}" +
@@ -66,13 +67,6 @@
   // ───────── 헤더 ─────────
   var bar = el("div", "ml-bar");
 
-  var back = el("button", "ml-btn", "← 뒤로");
-  back.type = "button";
-  back.addEventListener("click", function () {
-    if (history.length > 1) history.back();
-    else location.href = indexUrl;
-  });
-
   var home = el("a", "ml-btn", "🏠 " + HOME_LABEL);
   home.href = homeUrl;
 
@@ -88,8 +82,10 @@
     crumbs.appendChild(el("span", "cur", pageTitle));
   }
 
-  bar.appendChild(back);
-  bar.appendChild(home);
+  // 윗줄: 홈 버튼 / 아랫줄: 경로
+  var actions = el("div", "ml-actions");
+  actions.appendChild(home);
+  bar.appendChild(actions);
   bar.appendChild(crumbs);
   document.body.insertBefore(bar, document.body.firstChild);
 
