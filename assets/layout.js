@@ -1,16 +1,25 @@
 // 모든 페이지가 공유하는 공통 레이아웃:
-//   - 맨 위 헤더: 윗줄 [🏠 홈] 버튼 + 오른쪽 끝 버전(예: V0.1.7) / 아랫줄 경로(홈 › 사이트 제목 › 현재 페이지)
+//   - 맨 위 띠: 지금 어디에서 실행 중인지 (깃허브 / 내 PC 파일로 열기 / 내 PC 로컬 서버 / 그 밖)
+//   - 헤더: 윗줄 [🏠 홈] 버튼 + 오른쪽 끝 버전(예: V0.2.2) / 아랫줄 경로(홈 › 사이트 제목 › 현재 페이지)
+//       · 🏠 홈 = 허브. 깃허브에서는 https://{id}.github.io/, 파일로 열면 옆 허브 폴더 (config.js 의 id·hubFolder)
+//       · 경로의 사이트 제목 = 이 사이트의 목차(index.html)
 //   - 오른쪽 아래 리모컨: ▲ 맨 위 / ▼ 맨 아래
-// 사이트 제목과 홈 주소는 아래 "설정" 두 줄만 바꾸면 전체에 적용된다.
+// 사이트 제목·버전은 아래 "설정"에서 바꾼다. (버전은 작업할 때마다 올리고 CHANGELOG.md 에 적는다)
 (function () {
   "use strict";
 
   // ───────── 설정 ─────────
-  var SITE_TITLE = "모션 작업실 - sonnet";   // 사이트 제목 (경로, 목차 제목에 쓰임)
-  var HOME_URL = null;                       // "홈" 링크. null 이면 index.html, 다른 주소를 쓰려면 문자열로 지정
+  var SITE_TITLE = "모션 작업실";   // 사이트 제목 (경로, 목차 제목에 쓰임)
+  // "홈" 링크 = 허브 https://{아이디}.github.io/  (config.js 가 없으면 이 사이트의 index.html)
+  //  내 PC 에서 html 을 그냥 열었으면(file://) 나란히 있는 허브 폴더 ../{hubFolder}/index.html 로 간다.
+  var CFG = window.SITE_CONFIG;
+  var LOCAL = location.protocol === "file:";
+  var HOME_URL = !CFG ? null
+    : LOCAL && CFG.hubFolder ? "../" + CFG.hubFolder + "/index.html"
+    : CFG.id ? "https://" + CFG.id + ".github.io/" : null;
   var HOME_LABEL = "홈";
   // 버전 (큰 변화 . 중요한 변화 . 사소한 변화). 작업할 때마다 올리고 CHANGELOG.md 에도 적는다.
-  var SITE_VERSION = "0.1.7";
+  var SITE_VERSION = "0.3.0";
   // ─────────────────────────
 
   var script = document.currentScript;
@@ -55,7 +64,14 @@
     ".ml-remote button{width:42px;height:42px;border-radius:50%;border:1px solid #d9d5ce;background:#fff;color:#222;" +
     "box-shadow:0 2px 8px rgba(0,0,0,.15);font-size:16px;line-height:1;cursor:pointer}" +
     ".ml-remote button:hover{border-color:#e8742a;color:#c45a14}" +
-    "@media (max-width:560px){.ml-bar{padding:6px 10px;gap:6px}.ml-btn{padding:5px 9px}}";
+    // 맨 위 실행 위치 띠 (깃허브: 초록 / 내 PC: 주황 / 그 밖: 회색)
+    ".ml-env{align-self:stretch;margin:-8px -14px 0;padding:4px 14px;text-align:center;font-size:12px;" +
+    "background:#f6f4f2;color:#555;border-bottom:1px solid #e5e1dc}" +
+    ".ml-env.github{background:#eef6ee;color:#2f6b35;border-color:#cfe5d1}" +
+    ".ml-env.file,.ml-env.localhost{background:#fdf1e7;color:#c45a14;border-color:#f3d3b8}" +
+    // 좁은 화면(휴대폰)에서는 본문 좌우에 16px 여백 (노션 내보내기 CSS 는 여백이 없어 글이 화면 끝에 붙는다)
+    "@media (max-width:940px){body{padding-left:16px !important;padding-right:16px !important}}" +
+    "@media (max-width:560px){.ml-bar{padding:6px 10px;gap:6px}.ml-btn{padding:5px 9px}.ml-env{margin:-6px -10px 0;padding:4px 10px}}";
   var style = document.createElement("style");
   style.textContent = css;
   document.head.appendChild(style);
@@ -74,6 +90,20 @@
 
   // ───────── 헤더 ─────────
   var bar = el("div", "ml-bar");
+
+  // 맨 위 띠: 지금 어디에서 실행 중인지 항상 보여 준다.
+  var host = location.hostname;
+  var env = LOCAL ? "file"
+    : /\.github\.io$/i.test(host) ? "github"
+    : host === "localhost" || host === "127.0.0.1" || host === "[::1]" ? "localhost"
+    : "other";
+  var envText = {
+    github: "깃허브에서 실행 중 · " + location.host,
+    file: "내 PC 폴더에서 실행 중 (파일로 열기) · 홈은 옆 허브 폴더로 연결돼요",
+    localhost: "내 PC 로컬 서버에서 실행 중 · " + location.host + " · 홈은 깃허브로 연결돼요",
+    other: location.host + " 에서 실행 중 · 홈은 깃허브로 연결돼요"
+  }[env];
+  bar.appendChild(el("div", "ml-env " + env, envText));
 
   var home = el("a", "ml-btn", "🏠 " + HOME_LABEL);
   home.href = homeUrl;

@@ -1,8 +1,13 @@
 // 모든 페이지가 공유하는 이미지·영상 삽입 함수.
 // 페이지 HTML 에는 주소가 없고, 빈 자리 표시만 있다:
-//     <figure class="image" data-img="net/12"></figure>      -> url_data.js 의 images["net/12"]
-//     <figure data-video="net/12"></figure>                  -> url_data.js 의 videos["net/12"]
+//     <figure class="image" data-img="폴더/이름"></figure>   -> url_data.js 의 images["폴더/이름"]
+//     <figure data-video="폴더/번호"></figure>             -> url_data.js 의 videos["폴더/번호"]
+// 이 파일은 두 사이트(모션 작업실·참고 작업실)가 똑같이 쓴다. 고치면 두 곳을 같이 고친다.
 // 주소는 전부 url_data.js 에서 읽는다. 이미지·영상을 바꾸려면 url_data.js 만 고치면 된다.
+// 영상 옵션 (url_data.js 의 각 영상에 적음):
+//   loop: true  -> 소리 없이 저절로 반복 재생 (브라우저는 소리 없는 영상만 자동 재생을 허락한다)
+//   drive: 주소 -> mp4 가 없으면 구글 드라이브 재생창으로, 있으면 "드라이브에서 보기" 링크를 단다
+// 영상은 화면 가까이 왔을 때만 만든다. (한꺼번에 불러오면 느려지므로)
 (function () {
   "use strict";
 
@@ -63,6 +68,13 @@
       player.src = resolve(entry.src);
       player.style.cssText =
         "width:100%;max-width:720px;aspect-ratio:16/9;background:#000;border-radius:8px;display:block";
+      // loop: true 인 영상은 소리 없이 저절로 반복 재생한다. (브라우저는 소리 없는 영상만 자동 재생을 허락한다)
+      if (entry.loop) {
+        player.muted = true;
+        player.loop = true;
+        player.autoplay = true;
+        player.preload = "auto";
+      }
       player.addEventListener("error", function () {
         var msg = document.createElement("p");
         msg.textContent = "영상을 불러오지 못했어요.";
